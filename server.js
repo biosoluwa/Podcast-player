@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import podcastIndexApi from 'podcast-index-api'
+import { searchRoute } from './router/searchRoute.js'
 
 dotenv.config()
 
@@ -15,15 +16,7 @@ const api = podcastIndexApi(
     'podcast-player/1.0'
 )
 
-app.get('/api/search', async(req,res)=>{
-    try{
-        const results = await api.searchByTerm(req.query.q)
-        res.json(results)
-    }catch(err){
-        res.status(500).json({error: "Internal server error"})
-    }
-
-})
+app.use('/api', searchRoute)
 
 app.listen(PORT, ()=> console.log('Server listening on PORT: ', PORT))
 

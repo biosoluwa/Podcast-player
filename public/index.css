@@ -183,7 +183,9 @@ h2{
     animation: roll 1s linear infinite;
 }
 
-
+.active{
+    border-top: 3px solid #335c67;
+}
 
 @media(min-width: 501px){
     .search-bar{

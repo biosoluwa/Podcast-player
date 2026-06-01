@@ -14,8 +14,12 @@
         </div>
         <nav>
             <ul>
-                <li>SEARCH</li>
-                <li>LISTEN</li>
+                <li>
+                    <button>SEARCH</button>
+                </li>
+                <li>
+                    <button>LISTEN</button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -27,12 +31,12 @@
                     <span></span>
                     <span></span>
                 </div>
-                <div></div>
+                <div class="search-terms" id="search-terms"></div>
             </div>
             <form action="">
                 <input type="search" id="search-input" placeholder="Search for a podcast" aria-label="Search bar for podcasts">
                 <button type="submit" class="search-btn">Search</button>
-                <button type="button" class="clear-btn">Clear history</button>
+                <button type="button" class="clear-btn" id="clear-btn">Clear history</button>
             </form>
         </div>   
         <div>
