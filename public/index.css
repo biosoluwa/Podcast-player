@@ -7,7 +7,7 @@
 html, body{
     background-color: #1D1E2C;
     color: #DDBDD5;
-    overflow: hidden;
+    /* overflow: hidden; */
 
 }
 
@@ -112,6 +112,12 @@ input[type="search"]::placeholder{
     align-self: flex-end;
     font-weight: bold;
     cursor: pointer;
+}
+
+[data-src]{
+    display: block;
+    min-height: 50px;
+    width: 100px;
 }
 
 @media(min-width: 501px){
