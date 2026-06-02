@@ -4,6 +4,7 @@ let errorMsg = document.getElementById('error')
 const animationContainer = document.querySelector('.animation-container')
 
 const searchTerms = document.getElementById('search-terms')
+const searchHistory = document.getElementById('search-history')
 
 let searchArray = []
 
@@ -55,16 +56,43 @@ function renderPodcasts(podObj){
 }
 
 
-function displaySearchHistory(arr){
-    let searchHistory = ''
-    arr.forEach(search=>{
-        searchHistory += `
+
+searchHistory.addEventListener('click', function(){
+    if(searchArray.length === 0) return 
+
+     let history = ''
+    searchArray.forEach(search=>{
+        history += `
                 <p>${search}</p>
         
         `
     })
-    searchTerms.innerHTML = searchHistory
-}
+    searchTerms.innerHTML = history
+
+    searchTerms.classList.toggle('hide')
+})
+
+searchTerms.addEventListener('click', async function(e){
+    const text 
+    if(e.target.tagName === 'P'){
+        text = e.target.textContent
+    }
+     animationContainer.style.display = 'block'
+        errorMsg.style.display = 'none'
+        try{
+            const res = await fetch(`/api/search?q=${text}`)
+            if(!res.ok){
+                throw new Error('Error getting podcast')
+            }
+            const data = await res.json()
+            console.log(data)
+            renderPodcasts(data)
+        }catch(err){
+            console.error(err)
+        }finally{
+            animationContainer.style.display = 'none'
+        }
+})
 
 document.getElementById('clear-btn').addEventListener('click', function(){
     searchArray = []
@@ -82,8 +110,33 @@ container.addEventListener('click', async function(e){
         const res = await fetch (`/api/search?feedId=${id}`)
         const data = await res.json()
         console.log(data)
+        renderEpisodes(data)
     }catch(err){
         console.error(err)
     }
 
 })
+
+function renderEpisodes(data){
+     const episodes = data.items
+    container.innerHTML = episodes.map((episode)=>{
+        
+      return  `
+            <div class="card" data-id="${episode.id}">
+                <div class="card-image">
+                    <img data-src="${episode.feedImage}" src="${episode.feedImage}" alt="podcast image" />
+                </div>
+                <div class="card-description">
+                    <h2>${episode.description}</h2>
+                    <div>
+                        <i class="fa-solid fa-play" data-src="${episode.enclosureUrl}" data-img="${episode.feedUrl}" data-title="${episode.title}" data-date="${episode.datePublishedPretty}"></i>
+                        <i class="fa-solid fa-list"></>
+                        <span>Published: <time datetime="${episode.datePublishedPretty}">${episode.datePublishedPretty}</time></span>
+                    </div>
+                    <p class="description">${episode.title}</p>
+                </div>
+            </div>
+        `
+    }).join('')
+
+}

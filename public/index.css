@@ -103,6 +103,30 @@ input[type="search"]::placeholder{
     color: #F7EBEC;
 }
 
+.search-history{
+    position: relative;
+}
+
+.search-terms{
+    position: absolute;
+    width: 130px;
+    border-radius: 4px;
+    top: 50;
+    right: 1000;
+    background-color: #9e2a2b;
+    color: #1D1E2C;
+}
+
+.search-terms > p{
+    margin: 1em;
+    border-bottom: 2px dashed #F7EBEC;
+    cursor: pointer;
+}
+
+.hide{
+    display: none;
+}
+
 .search-btn{
     background-color: #59656F;
     cursor: pointer;
@@ -186,6 +210,8 @@ h2{
 .active{
     border-top: 3px solid #335c67;
 }
+
+
 
 @media(min-width: 501px){
     .search-bar{
